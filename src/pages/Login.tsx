@@ -1,4 +1,5 @@
-
+const clientId = 'f7f5ea5e2f56446fbc12726619aa5eb9';
+const redirectUri = 'http://localhost:5173/callback';
 const scopes = [
   'user-top-read',
 ];
