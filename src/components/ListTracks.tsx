@@ -21,6 +21,9 @@ const ListTracks = () => {
           <li key={track.id}>
             { track.images && <img src={track.images[0]?.url} alt={track.name} width="50" height="50" /> }
             <span>{track.name}</span>
+            <button onClick={() => window.location.href = `/track/${track.id}`}>
+              View Track
+            </button>
           </li>
         ))}
       </ul>

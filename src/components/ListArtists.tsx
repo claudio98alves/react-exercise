@@ -21,9 +21,9 @@ const ListArtists = () => {
           <li key={artist.id}>
             <img src={artist.images[0].url} alt={artist.name} width="50" height="50" />
             <span>{artist.name}</span>
-          <div onClick={() => window.location.href = `/artist/${artist.id}`} style={{ cursor: 'pointer', color: 'white', textDecoration: 'underline' }}>
-            View Artist
-          </div>
+            <button onClick={() => window.location.href = `/artist/${artist.id}`}>
+              View Artist
+            </button>
           </li>
         ))}
       </ul>

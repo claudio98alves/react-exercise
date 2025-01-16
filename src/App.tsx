@@ -3,6 +3,7 @@ import './App.css'
 import Login from "./pages/Login";
 import Callback from "./pages/Callback";
 import Artist from "./pages/Artist";
+import Track from "./pages/Track";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./pages/Home";
 import { AuthProvider } from './hooks/useAuth';
@@ -28,8 +29,8 @@ const router = createBrowserRouter([
         element: <Artist />,
       },
       {
-        path: '/track/trackId:',
-        element: <Home />,
+        path: '/track/:trackId',
+        element: <Track />,
       },
     ]
   },

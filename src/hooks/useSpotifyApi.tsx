@@ -57,13 +57,34 @@ export const useSpotifyApi = () => {
     return;
   }
 
+  const fetchTrack = async ({trackId, setTrack}: {trackId: string | undefined, setTrack: (track: any) => void}) => {
+    if (!token) {
+      console.error('No access token found');
+      return;
+    }
 
+    const response = await fetch(`https://api.spotify.com/v1/tracks/${trackId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      console.error('Failed to Artist');
+      return;
+    }
+
+    const data = await response.json();
+    setTrack(data)
+    return;
+  }
 
   return useMemo(
     () => ({
       fetchTopArtists,
       fetchTopTracks,
-      fetchArtist
+      fetchArtist,
+      fetchTrack
     }),
     [token]
   );
