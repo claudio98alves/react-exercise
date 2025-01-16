@@ -1,8 +1,11 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth'
 
 const Callback = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
+
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -10,14 +13,12 @@ const Callback = () => {
     const accessToken = params.get('access_token');
 
     if (accessToken) {
-      // Store the access token in local storage or state management
-      localStorage.setItem('spotify_access_token', accessToken);
+      login(accessToken)
       navigate('/home');
     } else {
-      // Handle error
       console.error('Access token not found');
     }
-  }, [navigate]);
+  }, [login, navigate]);
 
   return <div>Loading...</div>;
 }
