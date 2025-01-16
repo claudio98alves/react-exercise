@@ -4,7 +4,7 @@ import { useAuth } from '../hooks/useAuth'
 
 const Callback = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, token } = useAuth();
 
 
   useEffect(() => {
@@ -12,13 +12,15 @@ const Callback = () => {
     const params = new URLSearchParams(hash.replace('#', ''));
     const accessToken = params.get('access_token');
 
-    if (accessToken) {
+    if (accessToken || token) {
       login(accessToken)
       navigate('/home');
-    } else {
+    }
+    else {
       console.error('Access token not found');
     }
-  }, [login, navigate]);
+  }, [login, navigate, token]);
+
 
   return <div>Loading...</div>;
 }

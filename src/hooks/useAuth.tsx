@@ -3,7 +3,7 @@ import useSessionStorage from "./useSessionStorage";
 const AuthContext = createContext<AuthContextType>({
   // is this really necessary? Find prettier way pls
   login: () => console.log("not defined"),
-  token: "null",
+  token: null,
   logout: () => console.log("not defined"),
 });
 
@@ -12,18 +12,19 @@ interface AuthProviderProps {
 }
 
 interface AuthContextType {
-  login: (token: string) => void;
-  token: string;
+  login: (token: string | null) => void;
+  token: string | null;
   logout: () => void;
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [token, setToken] = useSessionStorage("token", null);
+  const [token, setToken] = useSessionStorage("spotify_access_token", null);
 
   // login method
-  const login = (token: string) => {
-    console.log("setToken ", token)
-    setToken(token);
+  const login = (token: string | null ) => {
+    if (token !== null) {
+      setToken(token);
+    }
   };
 
   const logout = () => {
