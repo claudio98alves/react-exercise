@@ -1,23 +1,12 @@
-import { useEffect, useState } from 'react';
-import { useSpotifyApi } from '../hooks/useSpotifyApi'
 
 
-const ListTracks = () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [tracks, setTracks] = useState<any[]>([]);
-  const { fetchTopTracks } =  useSpotifyApi();
-
-  useEffect(() => {
-    fetchTopTracks({setTracks});
-  }, [fetchTopTracks]);
-
-  console.log(tracks)
+const ListTracks = ({tracks, title} : any) => {
 
   return (
     <div>
-      <h2>Top Tracks</h2>
+      <h2>{title}</h2>
       <ul>
-        {tracks.map((track) => (
+        {tracks.map((track: any) => (
           <li key={track.id}>
             { track.images && <img src={track.images[0]?.url} alt={track.name} width="50" height="50" /> }
             <span>{track.name}</span>

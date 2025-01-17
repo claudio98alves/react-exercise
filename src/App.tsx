@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Callback from "./pages/Callback";
 import Artist from "./pages/Artist";
 import Track from "./pages/Track";
+import Album from "./pages/Album";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./pages/Home";
 import { AuthProvider } from './hooks/useAuth';
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: '/track/:trackId',
         element: <Track />,
+      },
+      {
+        path: '/album/:albumId',
+        element: <Album />,
       },
     ]
   },

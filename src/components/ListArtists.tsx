@@ -1,17 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useSpotifyApi } from '../hooks/useSpotifyApi'
-
-
-const ListArtists = () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [artists, setArtists] = useState<any[]>([]);
-  const { fetchTopArtists } =  useSpotifyApi();
-
-  useEffect(() => {
-    fetchTopArtists({setArtists});
-  }, [fetchTopArtists]);
-
-  console.log(artists)
+const ListArtists = ({artists}: any) => {
 
   return (
     <div>

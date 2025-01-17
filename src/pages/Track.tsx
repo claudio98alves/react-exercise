@@ -13,7 +13,8 @@ const Artist = () => {
     fetchTrack({trackId ,setTrack});
   }, [fetchTrack]);
 
-  console.log(track)
+
+  //TODO: should reuse the the listArtist Component, but this way looked better
   return (
     <>
       <div>

@@ -2,18 +2,30 @@ import { useEffect, useState } from 'react';
 import { useParams } from "react-router"
 import { useNavigate } from "react-router-dom";
 import { useSpotifyApi } from '../hooks/useSpotifyApi'
+import ListTracks from '../components/ListTracks';
+import ListAlbums from '../components/ListAlbums';
 
 const Artist = () => {
   const navigate = useNavigate();
   const { artistId } = useParams()
+  const { fetchArtist, fetchTracksByArtist, fetchAlbumsByArtist } =  useSpotifyApi();
   const [artist, setArtist] = useState<any>();
-  const { fetchArtist } =  useSpotifyApi();
+  const [albums, setAlbums] = useState<any[]>([]);
+  const [tracks, setTracks] = useState<any[]>([]);
 
+  
   useEffect(() => {
     fetchArtist({artistId ,setArtist});
   }, [fetchArtist]);
 
-  console.log(artist)
+  useEffect(() => {
+    fetchTracksByArtist({artistId, setTracks});
+  }, [fetchTracksByArtist]);
+
+  useEffect(() => {
+    fetchAlbumsByArtist({artistId, setAlbums});
+  }, [fetchAlbumsByArtist]);
+
   return (
     <>
       <div>
@@ -25,14 +37,15 @@ const Artist = () => {
             <img src={artist.images[0].url} alt={artist.name} />
           )}
           <p>Followers: {artist.followers.total.toLocaleString()}</p>
-          <a href={artist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
-            Listen on Spotify
-          </a>
+          <button onClick={() => window.open(artist.external_urls.spotify, '_blank')}>Listen on Spotify</button>
+
           <ul>
         {artist.genres.map((genre: string, index: number) => (
           <li key={index}>{genre}</li>
         ))}
           </ul>
+          <ListAlbums albums={albums}></ListAlbums>
+          <ListTracks tracks={tracks} title={"Top Artist Tracks"}></ListTracks>
         </div>
       )}
       </div>
