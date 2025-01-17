@@ -76,6 +76,14 @@ export const useSpotifyApi = () => {
     return;
   }
 
+  const searchOnSpotify = async ({query} : {query: string}) => {
+    const fetchUrl = `https://api.spotify.com/v1/search/?q=${query}&type=album,artist,track&limit=3`;
+    
+    const data = await spotifyFecth({fetchUrl })
+    const options = [...data.albums.items,...data.artists.items,...data.tracks.items]
+    return options;
+  }
+
   const spotifyFecth = async ({fetchUrl}: {fetchUrl: string}) => {
     if (!token) {
       console.error('No access token found');
@@ -90,7 +98,6 @@ export const useSpotifyApi = () => {
 
     if (!response.ok) {
       console.error('Failed to fecth ' + fetchUrl);
-      console.log(response)
       if(response.status == 401) {
         logout()
       }
@@ -110,7 +117,8 @@ export const useSpotifyApi = () => {
       fetchTracksByArtist,
       fetchAlbumsByArtist,
       fetchAlbum,
-      fetchAlbumTracks
+      fetchAlbumTracks,
+      searchOnSpotify
     }),
     [token]
   );
