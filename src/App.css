@@ -33,10 +33,25 @@
   }
 }
 
-.card {
-  padding: 2em;
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
+.card {
+  display: flex;
+  justify-content: space-between;
+  margin: 1.5rem;
+  border: 2px solid rgba(99, 102, 241, 0.75);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.card-image {
+  
+}
 .read-the-docs {
   color: #888;
 }

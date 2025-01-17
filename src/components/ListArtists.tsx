@@ -4,18 +4,20 @@ const ListArtists = ({artists}: {artists: ArtistProps[]}) => {
 
   return (
     <div>
-      <h2>Top Artists</h2>
-      <ul>
+      <h2 className="title">Top Artists</h2>
+      <div>
         {artists.map((artist) => (
-          <li key={artist.id}>
-            <img src={artist.images[0].url} alt={artist.name} width="50" height="50" />
-            <span>{artist.name}</span>
+          <div key={artist.id} className="card">
+            <div className="flex justify-start space-x-4 items-center">
+              <img src={artist.images[0].url} alt={artist.name} width="50" height="50" />
+              <span>{artist.name}</span>
+            </div>
             <button onClick={() => window.location.href = `/artist/${artist.id}`}>
               View Artist
             </button>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

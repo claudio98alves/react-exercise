@@ -8,8 +8,6 @@ const SearchBar = () => {
   
   const navigate = useNavigate();
 
-
-  //TODO: use useState for the options
   const loadOptions = async (inputValue: string) => {
     let newOptions = []
     if (inputValue.length >= 2) {
@@ -32,11 +30,11 @@ const SearchBar = () => {
     // styles for the dropdown options
     option: (styles, state) => ({
       ...styles,
-      backgroundColor: state.isFocused ? "purple" : "#333",
+      backgroundColor: state.isFocused ? "#747bff" : "#333",
     })
   };
 
-  const handleSelect = (selectedOption: any) => {
+  const handleSelect = (selectedOption: {type: string, id: string}) => {
     const type = selectedOption.type;
     const itemId = selectedOption.id;
 
@@ -46,7 +44,6 @@ const SearchBar = () => {
   
   return (
     <div>
-      <h2>SearchBar</h2>
       <AsyncSelect
         cacheOptions
         loadOptions={loadOptions}
