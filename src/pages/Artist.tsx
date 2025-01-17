@@ -4,27 +4,28 @@ import { useNavigate } from "react-router-dom";
 import { useSpotifyApi } from '../hooks/useSpotifyApi'
 import ListTracks from '../components/ListTracks';
 import ListAlbums from '../components/ListAlbums';
+import { AlbumProps, ArtistProps, TrackProps } from '../types';
 
 const Artist = () => {
   const navigate = useNavigate();
   const { artistId } = useParams()
   const { fetchArtist, fetchTracksByArtist, fetchAlbumsByArtist } =  useSpotifyApi();
-  const [artist, setArtist] = useState<any>();
-  const [albums, setAlbums] = useState<any[]>([]);
-  const [tracks, setTracks] = useState<any[]>([]);
+  const [artist, setArtist] = useState<ArtistProps>();
+  const [albums, setAlbums] = useState<AlbumProps[]>([]);
+  const [tracks, setTracks] = useState<TrackProps[]>([]);
 
   
   useEffect(() => {
     fetchArtist({artistId ,setArtist});
-  }, [fetchArtist]);
+  }, [fetchArtist, artistId]);
 
   useEffect(() => {
     fetchTracksByArtist({artistId, setTracks});
-  }, [fetchTracksByArtist]);
+  }, [fetchTracksByArtist, artistId]);
 
   useEffect(() => {
     fetchAlbumsByArtist({artistId, setAlbums});
-  }, [fetchAlbumsByArtist]);
+  }, [fetchAlbumsByArtist, artistId]);
 
   return (
     <>

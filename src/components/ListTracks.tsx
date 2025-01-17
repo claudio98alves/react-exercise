@@ -1,12 +1,12 @@
+import { TrackProps } from "../types";
 
-
-const ListTracks = ({tracks, title} : any) => {
+const ListTracks = ({tracks, title} : {tracks: TrackProps[], title: string}) => {
 
   return (
     <div>
       <h2>{title}</h2>
       <ul>
-        {tracks.map((track: any) => (
+        {tracks.map((track) => (
           <li key={track.id}>
             { track.images && <img src={track.images[0]?.url} alt={track.name} width="50" height="50" /> }
             <span>{track.name}</span>

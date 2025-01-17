@@ -1,30 +1,28 @@
 // dont really know if this should be inside hooks, but it seemed ok for nowimport { createContext, useContext, useMemo, ReactNode } from "react";
 import { useMemo } from 'react';
 import { useAuth } from '../hooks/useAuth'
-
-//TODO: Code should be dry, just build urls and have a unique fetch with error handling
+import { ArtistProps, TrackProps, AlbumProps } from '../types';
 
 export const useSpotifyApi = () => {
   const { token, logout } = useAuth();
 
-  const fetchTopArtists = ({setArtists}: {setArtists: ((items: any[]) => void)}) => {
-    fetchTop({type: "artists", setFunction: setArtists})
-  };
-
-  const fetchTopTracks = ({setTracks}: {setTracks: ((items: any[]) => void)}) => {
-    fetchTop({type: "tracks", setFunction: setTracks})
-  };
-
-  const fetchTop = async ({type, limit=5, setFunction}: {type: string, limit?: number, setFunction: (items: any[]) => void}) => {
-
-    const fetchUrl = `https://api.spotify.com/v1/me/top/${type}?limit=${limit}`;
+  const fetchTopArtists = async ({setArtists}: {setArtists: ((items: ArtistProps[]) => void)}) => {
+    const fetchUrl = `https://api.spotify.com/v1/me/top/artists?limit=5`;
     const data = await spotifyFecth({fetchUrl })
 
-    setFunction(data.items)
+    setArtists(data.items)
     return;
-  }
+  };
 
-  const fetchArtist = async ({artistId, setArtist}: {artistId: string | undefined, setArtist: (artist: any) => void}) => {
+  const fetchTopTracks = async ({setTracks}: {setTracks: ((items: TrackProps[]) => void)}) => {
+    const fetchUrl = `https://api.spotify.com/v1/me/top/tracks?limit=5`;
+    const data = await spotifyFecth({fetchUrl })
+
+    setTracks(data.items)
+    return;
+  };
+
+  const fetchArtist = async ({artistId, setArtist}: {artistId: string | undefined, setArtist: (artist: ArtistProps) => void}) => {
 
     const fetchUrl = `https://api.spotify.com/v1/artists/${artistId}`;
     const data = await spotifyFecth({fetchUrl })
@@ -33,7 +31,7 @@ export const useSpotifyApi = () => {
     return;
   }
 
-  const fetchTrack = async ({trackId, setTrack}: {trackId: string | undefined, setTrack: (track: any) => void}) => {
+  const fetchTrack = async ({trackId, setTrack}: {trackId: string | undefined, setTrack: (track: TrackProps) => void}) => {
 
     const fetchUrl = `https://api.spotify.com/v1/tracks/${trackId}`;
     const data = await spotifyFecth({fetchUrl })
@@ -42,7 +40,7 @@ export const useSpotifyApi = () => {
     return;
   }
 
-  const fetchAlbum = async ({albumId, setAlbum}: {albumId: string | undefined, setAlbum: (track: any) => void}) => {
+  const fetchAlbum = async ({albumId, setAlbum}: {albumId: string | undefined, setAlbum: (album: AlbumProps) => void}) => {
 
     const fetchUrl = `https://api.spotify.com/v1/albums/${albumId}`;
     const data = await spotifyFecth({fetchUrl })
@@ -51,7 +49,7 @@ export const useSpotifyApi = () => {
     return;
   }
 
-  const fetchAlbumTracks = async ({albumId, setAlbumTracks}: {albumId: string | undefined, setAlbumTracks: (track: any) => void}) => {
+  const fetchAlbumTracks = async ({albumId, setAlbumTracks}: {albumId: string | undefined, setAlbumTracks: (tracks: TrackProps[]) => void}) => {
 
     const fetchUrl = `https://api.spotify.com/v1/albums/${albumId}/tracks`;
     const data = await spotifyFecth({fetchUrl })
@@ -60,7 +58,7 @@ export const useSpotifyApi = () => {
     return;
   }
 
-  const fetchTracksByArtist = async ({artistId, setTracks}: {artistId: string | undefined, setTracks: (track: any) => void}) => {
+  const fetchTracksByArtist = async ({artistId, setTracks}: {artistId: string | undefined, setTracks: (tracks: TrackProps[]) => void}) => {
 
     const fetchUrl =`https://api.spotify.com/v1/artists/${artistId}/top-tracks`;
     const data = await spotifyFecth({fetchUrl })
@@ -69,7 +67,7 @@ export const useSpotifyApi = () => {
     return;
   }
 
-  const fetchAlbumsByArtist = async ({artistId, setAlbums}: {artistId: string | undefined, setAlbums: (track: any) => void}) => {
+  const fetchAlbumsByArtist = async ({artistId, setAlbums}: {artistId: string | undefined, setAlbums: (albums: AlbumProps[]) => void}) => {
 
     const fetchUrl = `https://api.spotify.com/v1/artists/${artistId}/albums?limit=5`;
 

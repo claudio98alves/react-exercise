@@ -3,21 +3,22 @@ import { useParams } from "react-router"
 import { useNavigate } from "react-router-dom";
 import { useSpotifyApi } from '../hooks/useSpotifyApi'
 import ListTracks from '../components/ListTracks';
+import { TrackProps, AlbumProps } from '../types';
 
 const Album = () => {
   const navigate = useNavigate();
   const { albumId } = useParams()
-  const [album, setAlbum] = useState<any>();
-  const [albumTracks, setAlbumTracks] = useState<any[]>([]);
+  const [album, setAlbum] = useState<AlbumProps>();
+  const [albumTracks, setAlbumTracks] = useState<TrackProps[]>([]);
   const { fetchAlbum, fetchAlbumTracks } =  useSpotifyApi();
 
   useEffect(() => {
     fetchAlbum({albumId ,setAlbum});
-  }, [fetchAlbum]);
+  }, [fetchAlbum, albumId]);
 
   useEffect(() => {
     fetchAlbumTracks({albumId ,setAlbumTracks});
-  }, [fetchAlbumTracks]);
+  }, [fetchAlbumTracks, albumId]);
 
 
   //TODO: should reuse the the listArtist Component, but this way looked better
@@ -29,7 +30,7 @@ const Album = () => {
         <div>
           <h2>{album.name}</h2>
           <p>Release Date: {album.release_date}</p>
-            <p>Artists: {album.artists.map((artist: any, index: number) => (
+            <p>Artists: {album.artists.map((artist, index: number) => (
               <span key={artist.id}>
                 <a href={`/artist/${artist.id}`}>{artist.name}</a>
                 {index < album.artists.length - 1 && ', '}

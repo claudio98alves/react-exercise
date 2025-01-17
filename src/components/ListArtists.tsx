@@ -1,4 +1,6 @@
-const ListArtists = ({artists}: any) => {
+import { ArtistProps } from "../types";
+
+const ListArtists = ({artists}: {artists: ArtistProps[]}) => {
 
   return (
     <div>

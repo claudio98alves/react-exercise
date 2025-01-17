@@ -2,16 +2,17 @@ import { useEffect, useState } from 'react';
 import { useParams } from "react-router"
 import { useNavigate } from "react-router-dom";
 import { useSpotifyApi } from '../hooks/useSpotifyApi'
+import { TrackProps } from '../types';
 
 const Artist = () => {
   const navigate = useNavigate();
   const { trackId } = useParams()
-  const [track, setTrack] = useState<any>();
+  const [track, setTrack] = useState<TrackProps>();
   const { fetchTrack } =  useSpotifyApi();
 
   useEffect(() => {
     fetchTrack({trackId ,setTrack});
-  }, [fetchTrack]);
+  }, [fetchTrack, trackId]);
 
 
   //TODO: should reuse the the listArtist Component, but this way looked better
@@ -23,7 +24,7 @@ const Artist = () => {
         <div>
           <h2>{track.name}</h2>
           <p>Release Date: {track.album.release_date}</p>
-            <p>Artists: {track.artists.map((artist: any, index: number) => (
+            <p>Artists: {track.artists.map((artist, index: number) => (
               <span key={artist.id}>
                 <a href={`/artist/${artist.id}`}>{artist.name}</a>
                 {index < track.artists.length - 1 && ', '}

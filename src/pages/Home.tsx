@@ -2,13 +2,14 @@ import ListArtists from "../components/ListArtists"
 import ListTracks from "../components/ListTracks"
 import { useSpotifyApi } from '../hooks/useSpotifyApi'
 import { useEffect, useState } from 'react';
+import { ArtistProps, TrackProps } from "../types";
 
 
 
 const Home = () => {
 
-  const [tracks, setTracks] = useState<any[]>([]);
-  const [artists, setArtists] = useState<any[]>([]);
+  const [tracks, setTracks] = useState<TrackProps[]>([]);
+  const [artists, setArtists] = useState<ArtistProps[]>([]);
   const { fetchTopArtists, fetchTopTracks } =  useSpotifyApi();
 
   useEffect(() => {
@@ -33,5 +34,3 @@ const Home = () => {
 }
 
 export default Home
-
-//TODO: Fix Artist Track Album type (global file with types??)
